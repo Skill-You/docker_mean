@@ -1,0 +1,4 @@
+data
+mongo/db
+.env
+mongo/.DS_Store

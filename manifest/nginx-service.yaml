@@ -1,0 +1,51 @@
+# Version de l'API utilisée pour créer ce service
+apiVersion: v1
+
+# Type de ressource, ici un Service
+kind: Service
+
+# Métadonnées associées au service
+metadata:
+  # Étiquettes utilisées pour organiser et sélectionner des ensembles de ressources
+  labels:
+    io.kompose.service: nginx
+  # Nom du service
+  name: nginx
+  # Espace de noms, utilisé pour regrouper et isoler des ensembles de ressources au sein du même cluster
+  namespace: mean
+
+# Spécifications définissant le comportement du service
+spec:
+  # Allouer des ports de nœud de balanceur de charge (true pour activer)
+  allocateLoadBalancerNodePorts: true
+
+  # Politique de trafic externe, ici réglée sur Cluster pour indiquer que le trafic peut être routé vers n'importe quel nœud
+  externalTrafficPolicy: Cluster
+
+  # Politique de trafic interne, similaire à externalTrafficPolicy mais pour le trafic au sein du cluster
+  internalTrafficPolicy: Cluster
+
+  # Familles d'adresses IP supportées, ici IPv4
+  ipFamilies:
+    - IPv4
+
+  # Politique de famille d'IP, ici réglée sur SingleStack signifiant un seul type d'adresse IP
+  ipFamilyPolicy: SingleStack
+
+  # Ports sur lesquels le service est exposé
+  ports:
+    - nodePort: 32306 # Port du nœud où le service est exposé
+      port: 80        # Port utilisé par le service
+      protocol: TCP   # Protocole utilisé (TCP pour la transmission de données fiable)
+      targetPort: 80  # Port cible sur le pod auquel le service envoie des requêtes
+
+  # Sélecteur pour identifier les pods qui seront exposés par ce service
+  selector:
+    io.kompose.service: nginx
+
+  # Stratégie d'affinité de session, ici réglée sur None indiquant qu'il n'y a pas de préférence de routage basée sur le client
+  sessionAffinity: None
+
+  # Type de service, ici LoadBalancer pour distribuer le trafic externe entre les pods
+  type: LoadBalancer
+

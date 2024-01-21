@@ -1,0 +1,63 @@
+// Theme colors
+#main-wrapper {
+  &[data-layout="vertical"]{
+    /*This is for the logo bg*/
+    .topbar .top-navbar .navbar-header {
+      &[data-logobg="skin5"] {
+        background: #0B1354;
+        .navbar-brand {
+          .dark-logo {
+            display: inline;
+          }
+          .light-logo {
+            display: none;
+          }
+        }
+        .nav-toggler,
+        .topbartoggler {
+          color: #fff;
+        }
+      }
+    }
+    .topbar .navbar-collapse,
+    .topbar {
+      &[data-navbarbg="skin5"] {
+        background: #fff;
+      }
+    }
+    /*This is for the sidebar bg*/
+    .left-sidebar {
+      &[data-sidebarbg="skin5"] {
+        // background: #0B1354;
+        .sidebar-nav {
+          ul {
+            // background: #0B1354;
+            .sidebar-item {
+              &.active {
+                > .sidebar-link {
+                  color: #2185D0;
+                  i {
+                    color: #2185D0;
+                  }
+                }
+              }
+              .sidebar-link {
+                .feather {
+                  fill: rgba(41, 98, 255, 0.1);
+                }
+                &:hover {
+                  .feather {
+                    color: #0B1354;
+                  }
+                }
+                i {
+                  color: #0B1354;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

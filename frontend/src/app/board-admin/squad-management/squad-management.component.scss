@@ -1,0 +1,54 @@
+button.btn-default {
+  background: #000000;
+  border-radius: 50px !important;
+  width: 8%;
+  color: white;
+  b > i {
+    font-size: 25px;
+    font-weight: bold;
+  }
+}
+.league-lable {
+  display: flex;
+  min-height: 53px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #000000;
+  border-radius: 30px;
+  margin: 16px;
+  .league-text {
+    color: #fff;
+    text-align: center;
+    font-family: NotoSansRegular;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    button {
+      visibility: hidden;
+      position: relative;
+      left: 22px;
+    }
+  }
+  &:hover {
+    .league-text {
+      button {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  button.btn-default {
+    background: #000000;
+    border-radius: 66px !important;
+    width: 9%;
+    color: white;
+    b > i {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}

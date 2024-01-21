@@ -1,0 +1,42 @@
+# Version de l'API utilisée pour ce service. 'v1' est la version actuelle.
+apiVersion: v1
+
+# Le type de ressource ici est 'Service', qui définit comment exposer une application.
+kind: Service
+
+# Métadonnées du service, fournissant des détails supplémentaires.
+metadata:
+  # 'namespace' définit l'espace de noms Kubernetes où le service est déployé.
+  namespace: mean
+
+  # 'creationTimestamp' est laissé vide pour être rempli automatiquement par Kubernetes lors de la création.
+  creationTimestamp: null
+
+  # 'labels' contient des étiquettes pour organiser et sélectionner des objets Kubernetes.
+  labels:
+    # Label spécifique identifiant le service. Ici, il identifie 'database'.
+    io.kompose.service: database
+
+  # 'name' définit le nom du service. Ici, c'est 'database'.
+  name: database
+
+# Spécifications détaillant la configuration du service.
+spec:
+  # 'type' définit le type de service. 'ClusterIP' expose le service sur une adresse IP interne au cluster.
+  type: ClusterIP
+
+  # 'ports' définit les ports sur lesquels le service est exposé.
+  ports:
+    - # Détails du port
+      name: "27017" # Nom du port, ici '27017' pour MongoDB.
+      port: 27017  # Le port sur lequel le service est accessible.
+      targetPort: 27017 # Le port cible sur le pod où le service envoie le trafic.
+
+  # 'selector' spécifie comment identifier les pods qui fournissent ce service.
+  selector:
+    # Utilise le même label que celui défini dans les métadonnées.
+    io.kompose.service: database
+
+# 'status' contient l'état actuel du service. 'loadBalancer' est spécifique aux services de type LoadBalancer.
+status:
+  loadBalancer: {}

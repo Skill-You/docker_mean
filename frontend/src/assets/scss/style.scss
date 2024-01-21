@@ -1,0 +1,53 @@
+//
+// Xtreme Angular
+//
+// @import '~@swimlane/ngx-datatable/index.css';
+// @import '~@swimlane/ngx-datatable/themes/material.scss';
+// @import '~@swimlane/ngx-datatable/assets/icons.css';
+// @import '~@swimlane/ngx-datatable/assets/icons.css';
+// @import '~@swimlane/ngx-datatable/assets/icons.css';
+@import "../../../node_modules/angular-notifier/styles";
+@import "../../../node_modules/@swimlane/ngx-datatable/themes/material.scss";
+@import "../../../node_modules/@swimlane/ngx-datatable/themes/material.scss";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+
+//(Required file)
+@import "../scss/variable";
+
+// Import Bootstrap source files (Required file)
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/bootstrap-icons/font/bootstrap-icons.scss";
+
+//This is for the components (Required file)
+@import "core/core";
+@import "scafholdings";
+@import "components";
+
+//This is for the responsive (Required file)
+@import "responsive";
+
+//In This scss you can write your scss
+@import "custom";
+
+// Adding the fonts
+@font-face {
+  font-family: "NotoSansRegular";
+  src: url("../fonts/noto-sans-regular.woff");
+}
+@font-face {
+  font-family: "NotoSansBold";
+  src: url("../fonts/noto-sans-bold.woff");
+}
+
+@font-face {
+  font-family: "Anton";
+  src: url("../fonts/Anton-Regular.woff") format("woff"), url("../fonts/Anton-Regular.woff2") format("woff2"),
+    url("../fonts/Anton-Regular.svg#Anton-Regular") format("svg"), url("../fonts/Anton-Regular.eot"),
+    url("../fonts/Anton-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Anton-Regular.ttf") format("truetype");
+
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

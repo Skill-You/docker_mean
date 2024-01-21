@@ -1,0 +1,23 @@
+# Version de l'API utilisée pour créer cette ressource
+apiVersion: v1
+# Type de ressource, ici un PersistentVolumeClaim (Demande de Volume Persistant)
+kind: PersistentVolumeClaim
+metadata:
+  # Espace de noms (namespace) défini pour la ressource
+  namespace: mean
+  creationTimestamp: null
+  labels:
+    # Étiquette utilisée pour identifier le service auquel cette ressource appartient
+    io.kompose.service: database-claim0
+  # Nom de la Demande de Volume Persistant
+  name: database-claim0
+spec:
+  # Modes d'accès pour le volume. Ici, ReadWriteOnce signifie que le volume peut être monté en écriture par un seul nœud
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # Quantité de stockage demandée pour le volume persistant
+      storage: 100Mi
+# Statut initial de la ressource (laisser vide dans ce cas)
+status: {}

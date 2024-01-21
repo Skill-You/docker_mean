@@ -1,0 +1,34 @@
+# Version API du document, ici v1 indique la première version de l'API Kubernetes.
+apiVersion: v1
+
+# Type de ressource, PersistentVolumeClaim (PVC) est utilisé pour réclamer de l'espace de stockage dans un cluster.
+# PVC (Persistent Volume Claim) : Une demande de volume persistant, permettant aux utilisateurs de réserver un volume de stockage.
+kind: PersistentVolumeClaim
+
+# Métadonnées du PVC, fournissant des informations supplémentaires.
+metadata:
+  # Espace de nommage utilisé pour isoler les ressources dans le cluster, ici 'mean'.
+  namespace: mean
+  # Timestamp de création, laissé à null car géré automatiquement par Kubernetes.
+  creationTimestamp: null
+  # Étiquettes pour identifier et organiser les ressources, spécifique à Kompose.
+  labels:
+    io.kompose.service: database-claim2
+  # Nom du PVC, ici 'database-claim2'.
+  name: database-claim2
+
+# Spécifications du PVC, décrivant les caractéristiques de la demande de stockage.
+spec:
+  # Modes d'accès, ReadWriteOnce permet la lecture et l'écriture par un seul nœud à la fois.
+  # ReadWriteOnce : Un mode d'accès où le volume peut être monté en lecture-écriture par un seul nœud.
+  accessModes:
+    - ReadWriteOnce
+  # Ressources demandées pour le PVC.
+  resources:
+    requests:
+      # Quantité de stockage demandée, ici 100 MiB.
+      # MiB (Mebibyte) : Unité de mesure pour le stockage numérique, équivalant à 2^20 (1 048 576) octets.
+      storage: 100Mi
+
+# Statut du PVC, laissé vide ici car il est automatiquement rempli par Kubernetes.
+status: {}

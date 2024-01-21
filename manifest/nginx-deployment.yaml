@@ -1,0 +1,32 @@
+# Ce fichier YAML est utilisé pour configurer un déploiement Kubernetes pour un service Nginx.
+# Il définit les paramètres essentiels pour le déploiement, y compris le nombre de répliques, les sélecteurs et les stratégies.
+
+apiVersion: apps/v1 # Spécifie la version de l'API à utiliser.
+kind: Deployment # Définit le type de ressource comme un déploiement.
+metadata:
+  namespace: mean # Définit l'espace de nommage pour le déploiement. 
+  creationTimestamp: null # Le timestamp de création est géré automatiquement, donc ici il est défini comme 'null'.
+  labels: # Les étiquettes sont utilisées pour organiser et sélectionner un ensemble de ressources.
+    io.kompose.service: nginx # Étiquette pour identifier le service.
+  name: nginx # Nom du déploiement.
+spec: # Spécification du déploiement.
+  replicas: 1 # Nombre de répliques du pod à maintenir.
+  selector: 
+    matchLabels:
+      io.kompose.service: nginx # Sélectionne les pods avec ces étiquettes pour ce déploiement.
+  strategy: {} # Stratégie de déploiement (laisser vide pour utiliser la stratégie par défaut).
+  template: # Modèle pour les pods du déploiement.
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nginx
+    spec: # Spécification pour les containers dans les pods.
+      containers:
+        - image: skillandyou/mean-nginx # Image du container (nom de l'image Docker).
+          imagePullPolicy: IfNotPresent # Politique de téléchargement de l'image : ne pas télécharger si déjà présente.
+          name: mean-nginx # Nom du container.
+          ports:
+            - containerPort: 80 # Port sur lequel le container est exposé.
+          resources: {} # Ressources allouées au container (laisser vide pour les valeurs par défaut).
+      restartPolicy: Always # Politique de redémarrage des pods (toujours redémarrer en cas d'échec).
+status: {} # Statut du déploiement (géré automatiquement, laisser vide).

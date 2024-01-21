@@ -1,0 +1,41 @@
+version: "3.8" # Spécifie la version de docker-compose
+
+# Définit les services/conteneurs à exécuter
+services:
+  express:
+    # Nom du second service
+    build:
+      # Spécifie le répertoire du Dockerfile
+      context: .
+      dockerfile: dockerfile
+    container_name: mean_angular_express
+    ports:
+      - "3000:3000" # Spécifie le transfert de ports
+      # Ci-dessous, les variables d'environnement pour la base de données sont utiles lorsqu'une base de données est utilisé comme service géré
+    environment:
+      - SECRET=Thisismysecret # Clé secrète pour l'application
+      - MONGO_DB_USERNAME=admin-user # Nom d'utilisateur pour MongoDB
+      - MONGO_DB_PASSWORD=admin-password # Mot de passe pour MongoDB
+      - MONGO_DB_HOST=database # Hôte MongoDB
+      - MONGO_DB_PORT= # Port MongoDB
+      - MONGO_DB_PARAMETERS=?authSource=admin # Paramètres supplémentaires MongoDB
+      - MONGO_DB_DATABASE=mean-football # Nom de la base de données MongoDB
+    links:
+      - database # Lien vers le service de base de données
+
+  database:
+    # Nom du troisième service
+    image: mongo:latest # Spécifie l'image pour créer le conteneur
+    container_name: mean_mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin-user # Utilisateur root pour MongoDB
+      - MONGO_INITDB_ROOT_PASSWORD=admin-password # Mot de passe root pour MongoDB
+      - MONGO_DB_USERNAME=admin-user1 # Autre utilisateur MongoDB
+      - MONGO_DB_PASSWORD=admin-password1 # Mot de passe de l'autre utilisateur MongoDB
+      - MONGO_DB=mean-football # Base de données MongoDB
+    volumes:
+      - ./mongo:/home/mongodb # Volume pour les fichiers de configuration MongoDB
+      - ./mongo/init-db.d/:/docker-entrypoint-initdb.d/ # Volume pour les scripts d'initialisation
+      - ./mongo/db:/data/db # Volume pour les données MongoDB
+    ports:
+      - "27017:27017" # Spécifie le transfert de ports pour MongoDB

@@ -1,0 +1,60 @@
+# Ce fichier manifeste décrit le déploiement d'une base de données MongoDB.
+# Il utilise Kubernetes, un système d'orchestration de conteneurs, pour gérer le déploiement et la mise à l'échelle.
+
+apiVersion: apps/v1  # Spécifie la version de l'API Kubernetes utilisée.
+kind: Deployment  # Type de ressource Kubernetes, ici un déploiement.
+metadata:
+  namespace: mean  # Définit l'espace de nom dans lequel le déploiement est effectué.
+  creationTimestamp: null  # Horodatage de création, géré automatiquement par Kubernetes.
+  labels:
+    io.kompose.service: database  # Étiquette pour identifier le service.
+  name: database  # Nom du déploiement.
+spec:
+  replicas: 1  # Nombre de réplicas du pod, ici un seul.
+  selector:
+    matchLabels:
+      io.kompose.service: database  # Sélecteur pour associer le déploiement aux pods correspondants.
+  strategy:
+    type: Recreate  # Stratégie de déploiement, ici recréer les pods lors des mises à jour.
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: database
+    spec:
+      containers:
+        - env:  # Variables d'environnement pour le conteneur.
+            - name: MONGO_DB  # Nom de la base de données.
+              value: mean-football  # Valeur correspondante.
+            - name: MONGO_DB_PASSWORD  # Mot de passe de la base de données.
+              value: admin-password1
+            - name: MONGO_DB_USERNAME  # Nom d'utilisateur de la base de données.
+              value: admin-user1
+            - name: MONGO_INITDB_ROOT_PASSWORD  # Mot de passe root pour MongoDB.
+              value: admin-password
+            - name: MONGO_INITDB_ROOT_USERNAME  # Nom d'utilisateur root pour MongoDB.
+              value: admin-user
+          image: mongo:latest  # Image Docker utilisée, ici la dernière version de MongoDB.
+          name: mean-mongo  # Nom du conteneur.
+          ports:
+            - containerPort: 27017  # Port exposé par le conteneur.
+          resources: {}  # Ressources allouées au conteneur, ici non spécifiées.
+          volumeMounts:  # Montage de volumes pour la persistance des données.
+            - mountPath: /home/mongodb  # Chemin de montage dans le conteneur.
+              name: database-claim0  # Référence au volume.
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: database-claim1
+            - mountPath: /data/db
+              name: database-claim2
+      restartPolicy: Always  # Politique de redémarrage du conteneur.
+      volumes:  # Définition des volumes pour la persistance des données.
+        - name: database-claim0
+          persistentVolumeClaim:
+            claimName: database-claim0
+        - name: database-claim1
+          persistentVolumeClaim:
+            claimName: database-claim1
+        - name: database-claim2
+          persistentVolumeClaim:
+            claimName: database-claim2
+status: {}  # Statut du déploiement, géré automatiquement par Kubernetes.

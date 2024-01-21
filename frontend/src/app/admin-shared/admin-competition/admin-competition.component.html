@@ -1,0 +1,142 @@
+<div class="container mt-5">
+  <ng-template #content let-modal size="950px">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        <img src="{{ apiURL }}/static/{{ competitionLogo }}" width="100" height="100" *ngIf="competitionLogo" />
+        Update Competition Details
+      </h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="competitionForm">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">ShortCode/ Domain name</label>
+            <input type="text" [value]="" class="form-control" placeholder="ShortCode/ Domain name"
+              [(ngModel)]="patchedValues.shortCode" formControlName="shortCode" (blur)="verifyShortCode($event)"
+              class="form-control" [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }" />
+            <div *ngIf="submitted && f['shortCode']?.errors" class="invalid-feedback">
+              <div *ngIf="f['shortCode'].errors && f['shortCode'].errors['required']">
+                <small>ShortCode is required</small>
+              </div>
+            </div>
+            <div *ngIf="shortCodeExists" class="invalid-feedback">
+              <small>ShortCode is already in use</small>
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Name</label>
+            <div class="input-group competition-input-group">
+              <input type="text" class="form-control" (blur)="verifyCompetition($event)"
+                [ngClass]="{ 'is-invalid': submitted && f['competitionName'].errors }"
+                [(ngModel)]="patchedValues && patchedValues.competitionName" formControlName="competitionName"
+                placeholder="Competition Name" aria-label="Competition Name" width="70%" />
+              <div class="input-group-append" width="20%">
+                <input type="number" placeholder="Year" [(ngModel)]="patchedValues.competitionYear"
+                  formControlName="competitionYear" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && f['competitionYear'].errors }" class="form-control" />
+              </div>
+            </div>
+            <div *ngIf="submitted && f['competitionName']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionName'].errors && f['competitionName'].errors['required']">
+                <small>Competition is required</small>
+              </div>
+            </div>
+            <div *ngIf="submitted && f['competitionYear']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionYear'].errors && f['competitionYear'].errors['required']">
+                <small>Year is required</small>
+              </div>
+            </div>
+            <div *ngIf="competitionExists" class="invalid-feedback">
+              <small>Competition is already in use</small>
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Country</label>
+            <select class="form-select" [(ngModel)]="patchedValues && patchedValues.competitionCountry"
+              name="competitionCountry" formControlName="competitionCountry" aria-label="Default select">
+              <option [value]="0" selected>Select Country</option>
+              <ng-container *ngIf="countries">
+                <ng-container *ngFor="let country of countries">
+                  <option [value]="country.code"
+                    [selected]="patchedValues && patchedValues?.competitionCountry == country.code">
+                    {{ country.name }}
+                    <span class="fi fi-gr"></span>
+                  </option>
+                </ng-container>
+              </ng-container>
+            </select>
+            <div *ngIf="submitted && f['competitionCountry']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionCountry'].errors && f['competitionCountry'].errors['required']">
+                <small>Country is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Logo</label>
+            <input type="file" [value]="" class="form-control" (change)="uploadLogo($event)"
+              placeholder="Competition Logo" [(ngModel)]="patchedValues && patchedValues.competitionLogo"
+              formControlName="competitionLogo" class="form-control" />
+          </div>
+          <div class="form-group col-12 col-md-2 col-lg-3 p-2">
+            <label for="name" class="control-label">Background Color</label>
+            <input type="color" [value]="" class="form-control" placeholder="Competition Background"
+              [(ngModel)]="patchedValues && patchedValues.competitionBackground"
+              formControlName="competitionBackground" />
+          </div>
+
+          <div class="form-group col-12 col-md-2 col-lg-3 p-2">
+            <label for="name" class="control-label">Font Color</label>
+            <input type="color" [value]="" class="form-control" placeholder="Competition Color"
+              [(ngModel)]="patchedValues && patchedValues.competitionColor" formControlName="competitionColor" />
+          </div>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Border Size</label>
+            <input type="number" [value]="" min="1" max="5" class="form-control" placeholder="Border Size (0 - 5)"
+              [(ngModel)]="patchedValues && patchedValues.competitionBorder" formControlName="competitionBorder"
+              class="form-control" />
+          </div>
+          <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2">
+            <label for="name" class="control-label">Competition Description</label>
+            <textarea type="text" [value]="" class="form-control" placeholder="Competition Description"
+              [(ngModel)]="patchedValues && patchedValues.competitionDescription"
+              formControlName="competitionDescription" class="form-control">
+            </textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+
+      <div class="justify-content-center">
+        <button type="button" class="btn btn-gradient" (click)="onSubmit()">Update Competition</button>
+      </div>
+    </div>
+  </ng-template>
+  <div class="row justify-content-center" *ngIf="dashboardContents['competitions']">
+    <div class="col-12 col-md-6 col-lg-4 m-4 mb-2 ps-0 pe-0" *ngFor="let blogcard of dashboardContents['competitions']">
+      <div class="d-flex">
+        <div class="card flex-fill"
+          [ngClass]="{ 'selected': selectedCompetition && selectedCompetition._id === blogcard._id }">
+          <div class="editBtn">
+            <i class="bi bi-pencil-square" (click)="open(content, blogcard)"></i>
+          </div>
+          <div class="row pe-0 ps-0" (click)="setCompetition(blogcard)">
+            <div class="col-4 img-square-wrapper text-center">
+              <img src="{{ apiURL }}/static/{{ blogcard.competitionLogo }}" class="img-fluid" width="100" height="100"
+                *ngIf="blogcard.competitionLogo" />
+              <img src="assets/images/dashboard/teams.svg" class="img-fluid" alt="Card image cap"
+                *ngIf="!blogcard.competitionLogo" />
+            </div>
+            <div class="col-8" style="margin: auto">
+              <h2 class="card-title">{{ blogcard.competitionName | titlecase }}</h2>
+              <p>
+                {{ blogcard.count }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

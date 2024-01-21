@@ -1,0 +1,37 @@
+# Version de l'API Kubernetes utilisée
+apiVersion: v1
+
+# Type de l'objet Kubernetes, ici un 'Service'
+kind: Service
+
+# Métadonnées du service
+metadata:
+  # Espace de noms (namespace) pour le regroupement logique des ressources
+  namespace: mean
+  
+  # Horodatage de création, laissé à null car géré automatiquement
+  creationTimestamp: null
+
+  # Étiquettes (labels) pour identifier et organiser les services
+  labels:
+    # Étiquette spécifiant le service lié à 'express'
+    io.kompose.service: express
+  
+  # Nom du service
+  name: express
+
+# Spécifications du service
+spec:
+  # Ports que le service expose
+  ports:
+    - name: "3000" # Nom du port, ici "3000"
+      port: 3000  # Port sur lequel le service est exposé
+      targetPort: 3000  # Port cible sur le pod
+
+  # Sélecteur utilisé pour identifier les pods auxquels le service doit être lié
+  selector:
+    io.kompose.service: express
+
+# État du service, ici un équilibreur de charge vide (loadBalancer)
+status:
+  loadBalancer: {}

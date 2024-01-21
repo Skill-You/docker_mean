@@ -1,0 +1,57 @@
+# Version de l'API de Kubernetes utilisée pour créer ce déploiement
+apiVersion: apps/v1
+
+# Type de ressource créée, ici un déploiement
+kind: Deployment
+
+# Métadonnées associées au déploiement
+metadata:
+  # Définit le namespace (espace de nom) au sein duquel le déploiement est réalisé
+  namespace: mean
+  # Timestamp de création, laissé à null car géré automatiquement par Kubernetes
+  creationTimestamp: null
+  # Labels utilisés pour organiser et sélectionner des objets Kubernetes
+  labels:
+    io.kompose.service: angular
+  # Nom du déploiement
+  name: angular
+
+# Spécification du déploiement
+spec:
+  # Nombre de réplicas (copies) du pod à maintenir
+  replicas: 1
+  # Sélecteur utilisé pour identifier les pods à gérer
+  selector:
+    matchLabels:
+      io.kompose.service: angular
+  # Stratégie de déploiement, laissée vide pour utilisation des paramètres par défaut
+  strategy: {}
+  # Template (modèle) utilisé pour créer les pods
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: angular
+    # Spécification des conteneurs dans le pod
+    spec:
+      containers:
+        - env:
+            # Définition des variables d'environnement pour le conteneur
+            - name: NODE_ENV
+              value: dev
+          # Image Docker à utiliser pour le conteneur
+          image: skillandyou/mean-angular:latest
+          # Politique de récupération de l'image
+          imagePullPolicy: IfNotPresent
+          # Nom du conteneur
+          name: mean-angular
+          # Ports sur lesquels le conteneur sera accessible
+          ports:
+            - containerPort: 4000
+          # Ressources allouées au conteneur, laissées vides pour les valeurs par défaut
+          resources: {}
+      # Politique de redémarrage des conteneurs en cas de crash
+      restartPolicy: Always
+
+# Status du déploiement, laissé vide car géré automatiquement par Kubernetes
+status: {}

@@ -1,0 +1,22 @@
+# Ce fichier définit un service dans Kubernetes pour une application Angular.
+# Les services Kubernetes permettent de définir comment accéder aux applications, ici Angular.
+
+apiVersion: v1  # Spécifie la version de l'API Kubernetes utilisée.
+kind: Service   # Indique que ce fichier configure un "Service".
+metadata:
+  namespace: mean  # Définit l'espace de nom (namespace) dans lequel le service est créé.
+  creationTimestamp: null  # Timestamp de création, laissé à null pour une création automatique.
+  labels:
+    io.kompose.service: angular  # Étiquettes (labels) pour identifier le service, ici lié à Angular.
+  name: angular  # Nom du service, ici 'angular'.
+
+spec:  # Spécification du service.
+  ports:
+    - name: "4000"  # Nom du port, utilisé pour référencer ce port spécifiquement.
+      port: 4000  # Le port sur lequel le service est exposé.
+      targetPort: 4000  # Le port de l'application (cible) à laquelle le service se connecte.
+  selector:
+    io.kompose.service: angular  # Sélecteur permettant de lier le service à des pods Angular spécifiques.
+
+status:
+  loadBalancer: {}  # Configure un équilibrage de charge (load balancer), ici vide pour une configuration par défaut.

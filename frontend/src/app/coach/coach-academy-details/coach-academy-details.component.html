@@ -1,0 +1,302 @@
+<div class="academy-row" [style.background-color]="academy?.color">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12 col-lg-2" *ngIf="teamDeails">
+        <div class="acedmy-plus"><img [src]="getImg(teamDeails?.academy_id?.logo)" class="img-fluid" /><br /></div>
+      </div>
+      <div class="col-12 col-lg-5 academy-name" *ngIf="teamDeails">
+        <p>{{ teamDeails.teamName }}</p>
+        <p class="academy-team">{{ teamDeails?.league?.leagueName }}</p>
+      </div>
+      <div class="col-12 col-lg-5 academy-name text-end" *ngIf="coachCompetition && coachCompetition?.competitionName">
+        <p *ngIf="academy">{{ coachCompetition?.competitionName }}</p>
+        <p class="academy-team"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal size="950px">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Contact YFL</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <app-contact-admin [adminRecipientEmail]="adminRecipientEmail"></app-contact-admin>
+  </div>
+  <div class="modal-footer">
+  </div>
+</ng-template>
+<div class="container">
+  <div class="row" *ngIf="displayAddPlayer">
+    <div class="form-wrapper">
+      <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data"
+        (ngSubmit)="onFormSubmit()">
+        <div class="row justify-content-between">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">
+              <i class="bi bi-person-exclamation"></i> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gender
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input class="btn btn-success" type="checkbox" value="" formControlName="limitedAbility"
+                    [checked]="false" (change)="associatedLeaguesForSelectedTeam($event.target.value)" />
+                </button>
+              </div>
+
+              <select class="form-select form-control" name="gender" aria-label="Default select"
+                formControlName="gender" (change)="associatedLeaguesForSelectedTeam($event.target.value)">
+                <option value="">Select Gender</option>
+                <option value="Male" selected>Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">First Name</label>
+            <input type="text" [value]="784 - 1234 - 1234567 - 1" class="form-control" placeholder="First Name"
+              formControlName="firstName" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+            <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+              <div *ngIf="f['firstName'].errors['required']">
+                <small>First Name is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Surname</label>
+            <input type="text" value="" class="form-control" id="name" placeholder="Surname" formControlName="surName"
+              class="form-control" [ngClass]="{ 'is-invalid': submitted && f['surName'].errors }" />
+            <div *ngIf="submitted && f['surName'].errors" class="invalid-feedback">
+              <div *ngIf="f['surName'].errors['required']">
+                <small>Surname is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Date of birth</label>
+            <input type="date" value="" class="form-control" id="name" placeholder="DOB" formControlName="dob"
+              class="form-control" (blur)="getMaxAgeLeagues($event.target.value)"
+              [ngClass]="{ 'is-invalid': submitted && f['dob'].errors }" />
+            <div *ngIf="submitted && f['dob'].errors" class="invalid-feedback">
+              <div *ngIf="f['dob'].errors['required']">
+                <small>Date of birth is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="squadNo" class="control-label">Squad No</label>
+            <input type="number" value="" class="form-control" id="squadNo" placeholder="squadNo"
+              formControlName="squadNo" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['squadNo'].errors }" />
+            <div *ngIf="submitted && f['squadNo'].errors" class="invalid-feedback">
+              <div *ngIf="f['squadNo'].errors['required']">
+                <small>Squad no is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">League</label>
+            <input type="text" [class]="'form-control'" [placeholder]="League" formControlName="league"
+              [value]="teamDeails?.league?.leagueName" />
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">Team</label>
+            <input type="text" [class]="'form-control'" [placeholder]="Team" formControlName="team"
+              [value]="teamDeails?.teamName" />
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playerEidNo" class="control-label">EID No</label>
+            <input type="text" [(ngModel)]="eidNo" [value]="eidNo" name="playerEidNo" id="playerEidNo"
+              class="form-control" placeholder="784-1234-1234567-1" formControlName="playerEidNo"
+              (keypress)="appendHiphen($event)" [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
+              size="18" />
+            <div *ngIf="submitted && f['playerEidNo'].errors" class="invalid-feedback">
+              <div *ngIf="f['playerEidNo'].errors['required']">
+                <small>Player EID no and pattern should is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="eidFront" class="control-label">EID Front</label>
+            <input type="file" value="" class="form-control" id="eidFront" name="eidFront" placeholder="EID Front"
+              (change)="uploadEmiratesID($event)" formControlName="eidFront" class="form-control" accept="image/*"
+              [ngClass]="{ 'is-invalid': submitted && f['eidFront'].errors }" />
+            <div *ngIf="submitted && f['eidFront'].errors" class="invalid-feedback">
+              <div *ngIf="f['eidFront'].errors['required']">
+                <small>EID Front is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="eidBack" class="control-label">EID Back</label>
+            <input type="file" value="" class="form-control" id="eidBack" name="eidBack" placeholder="EID Back"
+              (change)="uploadEmiratesID($event)" formControlName="eidBack" class="form-control" accept="image/*"
+              [ngClass]="{ 'is-invalid': submitted && f['eidBack'].errors }" />
+            <div *ngIf="submitted && f['eidBack'].errors" class="invalid-feedback">
+              <div *ngIf="f['eidBack'].errors['required']">
+                <small>EID Back is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up League</label>
+            <ng-multiselect-dropdown [class]="" [placeholder]="'Playing up league'" [settings]="dropdownSettings"
+              [data]="dropleagues" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+              formControlName="playingUp">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up Team</label>
+            <ng-multiselect-dropdown [class]="" [placeholder]="'Playing up team'" [settings]="dropdownTeamSettings"
+              [data]="dropteams" (onSelect)="onTeamSelect($event)" (onSelectAll)="onSelectAll($event)"
+              formControlName="playingUpTeam">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
+              <div class="ms-3 w-100">
+                <button type="submit" class="btn btn-gradient col-12 text-white" [disabled]="playerExists">Add
+                  Player</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row" *ngIf="displayEditPlayer">
+    <div class="form-wrapper">
+      <form [formGroup]="editPlayerForm" class="justify-content-around" method="post" enctype="multipart/form-data"
+        (ngSubmit)="onUpdatePlayer()">
+        <div class="row justify-content-center">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">
+              <i class="bi bi-person-exclamation"></i> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gender
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input class="btn btn-success" type="checkbox" value="" formControlName="limitedAbility"
+                    [checked]="false" (change)="leagueForUpPlay($event.target.value)" />
+                </button>
+              </div>
+
+              <select class="form-select form-control" name="gender" aria-label="Default select"
+                (change)="leagueForUpPlay($event.target.value)" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">First Name</label>
+            <input type="text" class="form-control" id="name" placeholder="First Name" formControlName="firstName"
+              class="form-control" disabled />
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Last Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Last Name" formControlName="surName"
+              class="form-control" disabled />
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Date of birth</label>
+            <input type="text" class="form-control" id="name" placeholder="DOB" formControlName="dob"
+              class="form-control" (blur)="getMaxAgeLeagues($event.target.value)" disabled />
+          </div>
+
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up League</label>
+            <ng-multiselect-dropdown [class]="" [placeholder]="'Playing up league'" [settings]="dropdownSettings"
+              [data]="dropleagues" [(ngModel)]="selectedPlayingLeagues" (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)" formControlName="playingUp">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up Team</label>
+            <ng-multiselect-dropdown [class]="" [placeholder]="'Playing up team'" [settings]="dropdownTeamSettings"
+              [data]="dropteams" [(ngModel)]="selectedPlayingUpTeams" (onSelect)="onTeamSelect($event)"
+              (onSelectAll)="onSelectAll($event)" formControlName="playingUpTeam">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
+              <button type="submit" class="btn btn-gradient col-12">Update Player</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row page-filter-bar">
+    <div class="col-lg-6">
+      <div class="action-buttons d-flex justify-content-start gap-3">
+        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
+          <div class="dropdown" style="display: none">
+            <button class="btn btn-white btn-filter dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="bi bi-filter pe-3"></i>Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <ng-container *ngFor="let drp of dropdownList">
+                <a class="dropdown-item" (click)="addFilter(drp)">{{ drp }}</a>
+              </ng-container>
+            </div>
+          </div>
+          <ng-container *ngFor="let filter of filters">
+            <div class="filter-pills">
+              <div class="dropdown">
+                <div class="btn btn-white btn-filter dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  {{ filter }}
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="dropdownObj[filter]">
+                    <ng-container *ngFor="let child of dropdownObj[filter]">
+                      <div class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck"
+                          [checked]="isChecked(filter, child)" (change)="filterByType(filter, child)" />
+                        <label class="form-check-label" for="dropdownCheck">
+                          <a (click)="filterByType(filter, child)">
+                            {{ filter === "Team" ? child["teamName"] : child["leagueName"] }}
+                          </a>
+                        </label>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-gradient" (click)="togglePlayerForm()"><i class="bi bi-plus pe-3"></i>Add
+              Player</button>
+            <button class="btn btn-gradient" (click)="open(content)">Contact Us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <input type="text" class="form-control" id="name" placeholder="Player's Name" class="form-control"
+          (keyup)="filterPlayersByName($event.target.value)" />
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <ng-multiselect-dropdown [placeholder]="'EID'" [settings]="eidDropdownSettings" [data]="dropEID"
+          (onSelect)="onEidSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelect)="onDeSelect($event)">
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <app-coach-squad-list [players]="data" (delPlayer)="onDeletePlayer($event)" (editPlayer)="updatePlayer($event)"
+      [teams]="teams"></app-coach-squad-list>
+  </div>
+</div>
+<div style="position: absolute; bottom: 0; right: 0; background-color: transparent; z-index: 2">
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
+</div>

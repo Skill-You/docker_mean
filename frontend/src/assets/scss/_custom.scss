@@ -1,0 +1,273 @@
+// In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+@media (min-width: 667px) {
+  .modal-content {
+    width: 1000px;
+    padding: 10px;
+  }
+}
+.btn-back {
+  padding: 10px 20px;
+  border-radius: 30px 0 0 30px;
+  margin: 15px;
+  margin-right: 0 !important;
+}
+
+.btn-back::before {
+  content: "\e5e4"; /* Unicode for the arrow-left icon */
+  font-family: "bootstrap-icons";
+}
+
+.page-filter-bar{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  position: relative;
+  padding-right: 20px;
+}
+
+.form-select::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 3px); /* Adjust this value to vertically center the arrow */
+  right: 12px; /* Adjust this value to position the arrow as desired */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px; /* Adjust this value to control the size of the arrow */
+  border-color: #000 transparent transparent transparent; /* Adjust this value to control the color of the arrow */
+}
+
+.form-control {
+  min-height: 38px;
+  border-radius: 8px;
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  overflow: hidden;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.ngx-datatable.material {
+  border-radius: 10px;
+  box-shadow: 0px 2.44px 4.881px -2.44px rgba(16, 24, 40, 0.05), 0px 4.881px 9.762px -2.44px rgba(16, 24, 40, 0.05);
+  margin-bottom:50px;
+}
+
+.ngx-datatable.material .datatable-header{
+  background: #F9FAFB;
+}
+
+.ngx-datatable.material .datatable-header .datatable-header-cell{
+  background:#F9FAFB;
+}
+
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell .datatable-header-cell-label {
+  color: #667085;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+}
+
+.ngx-datatable .datatable-body .datatable-row-wrapper{
+  border-bottom:1px solid #EAECF0;
+}
+
+.ngx-datatable .datatable-body .datatable-row-wrapper:last-child{
+  border-bottom: 0;
+}
+
+.datatable-body-cell-label{
+  color: #101828;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+}
+
+.datatable-body-cell-label span, .datatable-body-cell-label p{
+  color: #101828;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+}
+
+.datatable-body-cell-label p{
+  margin:0;
+}
+
+.match-form-field span, .match-form-field input{
+  color: #101828;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px;
+}
+
+.ngx-datatable.material {
+  padding:0;
+}
+
+.ngx-datatable.material .datatable-header .datatable-row-left, .ngx-datatable.material .datatable-body .datatable-row-left {
+  background: #000;
+}
+
+.multiselect-dropdown .dropdown-btn{
+  border-radius: 8px !important;
+  border: 1px solid #D0D5DD !important;
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.btn{
+  border-radius: 8px;
+  font-family: 'Anton', sans-serif;
+}
+
+.btn-filter::after{
+  display: none;
+}
+
+.btn-filter{
+  color: #344054;
+  font-family: 'Anton', sans-serif;
+  font-size: 16px;
+}
+
+.btn-gradient, .btn-back{
+  color:#fff;
+  border: 1px solid #7280FF;
+  background: linear-gradient(270deg, #2185D0 0%, #42A3EA 99.64%);
+  box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
+}
+.btn-gradient:hover, .btn-back:hover{
+  color: #fff;
+}
+
+.btn-white, .btn-white:hover{
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
+}
+
+.form-wrapped{
+  padding:5% 0;
+  max-width: 816px;
+  margin: 0 auto;
+}
+
+label{
+  margin-bottom: 5px;
+}
+
+.input-group-append input{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group-prepend input, .input-group-prepend span{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.competition-input-group  > .form-control:first-child,
+.competition-input-group  > .form-select:first-child,
+.competition-input-group  > .form-floating:first-child {
+  flex: 70%;
+}
+
+.competition-input-group  > .input-group-append,
+.competition-input-group  > .input-group-append,
+.competition-input-group  > .input-group-append {
+  flex: 30%;
+}
+
+.super-admin-form, .user-form > .row > *{
+  margin-bottom:30px;
+}
+
+.team-form > .row > *{
+  margin-bottom:30px;
+}
+
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #344054;
+  font-family: 'Anton', sans-serif;
+  font-size: 16px;
+}
+
+.filter-pills .btn {
+  color: #344054;
+  font-family: 'Anton', sans-serif;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
+  display: inline-flex;
+  position: relative;
+  height:38px;
+}
+
+.filter-pills .btn .close-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid #EF4444;
+  top: -10px;
+  right: -7px;
+  position: absolute;
+  cursor: pointer;
+  border-radius: 100%;
+  color: #EF4444;
+  line-height: 17px;
+}
+
+.fixture-team-table .city-heading h4{
+color: #667085;
+font-family: "Anton", sans-serif;
+font-size: 18px;
+margin:20px 0;
+}
+
+.fixture-team-table .table{
+  box-shadow: 0px 2.44px 4.881px -2.44px rgba(16, 24, 40, 0.05), 0px 4.881px 9.762px -2.44px rgba(16, 24, 40, 0.05);
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow:hidden;
+}
+.fixture-team-table .table thead{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background: #F9FAFB;
+}
+.fixture-team-table .table thead th{
+  color: #667085;
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+  background:transparent;
+}
+.fixture-team-table .table tbody td{
+  background:#fff !important;
+  color: #101828;
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+}
+
+.dropdown-menu{
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
+}
+
+.dropdown-menu .form-check-label{
+  margin-left:5px;
+}
+
+@media (max-width: 768px) {
+  .mb-md-1 {
+    margin-bottom: 1rem;
+  }
+}

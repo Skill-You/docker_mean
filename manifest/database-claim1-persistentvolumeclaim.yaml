@@ -1,0 +1,18 @@
+# Fichier de configuration pour créer une revendication de volume persistant (PersistentVolumeClaim)
+# dans un environnement Kubernetes.
+
+apiVersion: v1 # Indique la version de l'API utilisée
+kind: PersistentVolumeClaim # Type d'objet Kubernetes, ici une revendication de volume persistant
+metadata:
+  namespace: mean # Espace de noms Kubernetes où sera déployée la revendication
+  creationTimestamp: null # Horodatage de création, laissé à null pour être géré automatiquement
+  labels:
+    io.kompose.service: database-claim1 # Étiquette pour identifier le service associé à la revendication
+  name: database-claim1 # Nom de la revendication de volume persistant
+spec:
+  accessModes: # Modes d'accès au volume
+    - ReadWriteOnce # Le volume peut être monté en lecture-écriture par un seul nœud
+  resources:
+    requests: # Requêtes de ressources pour le volume
+      storage: 100Mi # Quantité de stockage demandée pour le volume, ici 100 MiB
+status: {} # Statut du PersistentVolumeClaim, laissé vide pour être géré automatiquement

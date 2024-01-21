@@ -1,0 +1,42 @@
+<div class="col-xs-12 col-sm-12 col-lg-6 d-inline well" *ngIf="team">
+  <div class="col-sm-12 city-heading table-responsive">
+    <h4>{{ team.teamName }}</h4>
+  </div>
+  <ng-template #content let-modal size="950px">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Player Emirates ID</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <img [src]="imgSrc" class="img-fluid" />
+    </div>
+  </ng-template>
+  <table class="table table-scroll">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Squad No.</th>
+        <th>DOB</th>
+        <th>EID Front</th>
+        <th>EID Back</th>
+        <th>MVP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of players">
+        <td>{{ player.firstName }} {{ player.lastName }}</td>
+        <td>{{ player.squadNo }}</td>
+        <td>{{ player.dob | date : "dd.MM.yyyy" }}</td>
+        <td>
+          <img src="assets/images/eid-front.svg" width="80" (click)="open(content, player.eidFront)" />
+        </td>
+        <td>
+          <img src="assets/images/eid-back.svg" width="80" (click)="open(content, player.eidBack)" />
+        </td>
+        <td>
+          <input type="checkbox" [checked]="mvpPlayer?._id == player._id" (change)="addMvp(player)" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

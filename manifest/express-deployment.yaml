@@ -1,0 +1,43 @@
+apiVersion: apps/v1 # Spécifie la version de l'API utilisée
+kind: Deployment # Indique le type de l'objet Kubernetes, ici un déploiement
+metadata:
+  namespace: mean # Définit l'espace de noms dans lequel le déploiement est réalisé
+  creationTimestamp: null # Le timestamp de création est géré automatiquement, laissé à null
+  labels:
+    io.kompose.service: express # Étiquette utilisée pour identifier le service dans Kompose
+  name: express # Nom du déploiement
+spec:
+  replicas: 1 # Nombre de réplicas, ici un seul pour ce déploiement
+  selector:
+    matchLabels:
+      io.kompose.service: express # Sélecteur pour matcher les labels du déploiement
+  strategy: {} # Stratégie de déploiement, vide dans ce cas
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: express
+    spec:
+      containers:
+        - env:
+            - name: MONGO_DB_DATABASE # Nom de la variable d'environnement pour la base de données MongoDB
+              value: mean-football # Valeur associée à la variable d'environnement
+            - name: MONGO_DB_HOST
+              value: database # Host de la base de données
+            - name: MONGO_DB_PARAMETERS
+              value: ?authSource=admin # Paramètres supplémentaires pour la connexion à la base de données
+            - name: MONGO_DB_PASSWORD
+              value: admin-password # Mot de passe pour la base de données
+            - name: MONGO_DB_PORT
+            - name: MONGO_DB_USERNAME
+              value: admin-user # Nom d'utilisateur pour la base de données
+            - name: SECRET
+              value: Thisismysecret # Clé secrète pour l'application
+          image: skillandyou/mean-expressjs:latest # Image Docker à utiliser
+          imagePullPolicy: IfNotPresent # Politique de récupération de l'image
+          name: mean-express # Nom du conteneur
+          ports:
+            - containerPort: 4100 # Port sur lequel le conteneur est exposé
+          resources: {} # Ressources allouées au conteneur, vide dans ce cas
+      restartPolicy: Always # Politique de redémarrage du conteneur
+status: {} # Statut du déploiement, géré automatiquement

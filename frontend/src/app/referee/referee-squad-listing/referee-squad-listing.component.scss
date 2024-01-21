@@ -1,0 +1,48 @@
+@media (max-width: 667px) {
+  :host ::ng-deep .datatable-header-cell-label {
+    padding: 5px !important;
+    margin: 10px;
+  }
+
+  :host ::ng-deep .datatable-body-cell-label {
+    font-size: 12px !important;
+
+    button {
+      font-size: 12px !important;
+    }
+  }
+
+  .ngx-datatable.material {
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  :host ::ng-deep .datatable-header-cell {
+    width: 100%;
+    font-size: 12px !important;
+  }
+
+  :host ::ng-deep .datatable-body-cell {
+    font-size: 12px !important;
+    margin: none !important;
+    padding: none !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep .datatable-body-cell-label {
+    button: {
+      font-size: 12px !important;
+    }
+  }
+
+  :host ::ng-deep .datatable-body-cell:last-child {
+    overflow-x: revert;
+  }
+
+  :host ::ng-deep .datatable-body-cell:last-child {
+    font-size: 10px !important;
+    border-radius: 5px;
+    width: 275px !important;
+    padding: 0px !important;
+  }
+}
